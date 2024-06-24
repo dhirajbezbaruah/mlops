@@ -1,0 +1,28 @@
+{
+    "recommendations": [
+        "ms-python.python",
+        "streetsidesoftware.code-spell-checker",
+        "njpwerner.autodocstring","mikestead.dotenv",
+        "wholroyd.jinja",
+        "ms-toolsai.jupyter",
+        "ms-python.vscode-pylance",
+        "kevinrose.vsc-python-indent",
+        "tamasfe.even-better-toml",
+        "github.vscode-github-actions",
+        "github.copilot",
+        "github.copilot-chat",
+        "github.vscode-pull-request-github",
+        "eamodio.gitlens",
+        "visualstudioexptteam.vscodeintellicode",
+        "ms-toolsai.vscode-jupyter-cell-tags",
+        "ms-toolsai.jupyter-renderers",
+        "ms-toolsai.vscode-jupyter-slideshow",
+        "docsmsft.docs-authoring-pack",
+        "ms-vsliveshare.vsliveshare",
+        "ms-vscode.makefile-tools",
+        "davidanson.vscode-markdownlint",
+        "christian-kohler.path-intellisense",
+        "charliermarsh.ruff",
+        "timonwong.shellcheck"
+    ]
+}

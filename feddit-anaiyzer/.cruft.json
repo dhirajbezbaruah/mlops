@@ -1,0 +1,17 @@
+{
+    "template": "https://github.com/dainelli98/cookiecutter.git",
+    "commit": "af875dd17b4537121de10cef2a96b9935d4c5327",
+    "checkout": null,
+    "context": {
+        "cookiecutter": {
+            "project_name": "Feddit Analyzer",
+            "project_slug": "feddit-analyzer",
+            "package_name": "feddit_analyzer",
+            "version": "0.1.0",
+            "repository_url": "https://github.com/dainelli98/feddit-analyzer.git",
+            "project_description": "Web API that identifies if comments on a given subfeddit or category are positive or negative.",
+            "_template": "https://github.com/dainelli98/cookiecutter.git"
+        }
+    },
+    "directory": null
+}

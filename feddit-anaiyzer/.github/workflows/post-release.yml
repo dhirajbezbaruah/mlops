@@ -1,0 +1,71 @@
+name: Release
+
+run-name: Running setting up release for ${{github.event.repository.name}} project
+
+on:
+  push:
+    branches:
+      - 'main'
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  post-release-checks:
+    runs-on: ubuntu-latest
+
+    name: Post-release Checks
+
+    steps:
+      - name: Checkout repository code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Prepare poetry
+        run: pipx install poetry
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.11
+          cache: poetry
+          cache-dependency-path: poetry.lock
+
+      - name: Check poetry
+        run: poetry check
+
+      - name: Prepare environment
+        run: poetry install --all-extras
+
+      - name: Run tests
+        run: docker compose -f tests/compose/docker-compose.yml up --build --abort-on-container-exit
+
+      - name: Run linters
+        run: poetry run make lint
+
+      - name: Generate documentation
+        run: poetry run make docs
+
+      - name: Upload pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs/build
+
+  upload-pages:
+    runs-on: ubuntu-latest
+
+    name: Upload Pages
+
+    needs: post-release-checks
+
+    environment:
+      name: github-pages
+      url: ${{steps.deployment.outputs.page_url}}
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

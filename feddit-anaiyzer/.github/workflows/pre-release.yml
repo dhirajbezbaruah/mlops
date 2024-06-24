@@ -1,0 +1,45 @@
+name: Pre-release
+
+run-name: Running QA before release for ${{github.event.repository.name}} project
+
+on:
+  push:
+    branches:
+      - 'release/*'
+
+jobs:
+  pre-release-checks:
+    runs-on: ubuntu-latest
+
+    name: Pre-release Checks
+
+    steps:
+      - name: Checkout repository code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Poetry
+        run: pipx install poetry
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.11
+          cache: 'poetry'
+          cache-dependency-path: 'poetry.lock'
+
+      - name: Check Poetry configuration
+        run: poetry check
+
+      - name: Install dependencies
+        run: poetry install --all-extras
+
+      - name: Run tests
+        run: docker compose -f tests/compose/docker-compose.yml up --build --abort-on-container-exit
+
+      - name: Run linters
+        run: poetry run make lint
+
+      - name: Generate documentation
+        run: poetry run make docs

@@ -1,0 +1,55 @@
+repos:
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v4.6.0
+  hooks:
+    - id: trailing-whitespace
+    - id: end-of-file-fixer
+    - id: mixed-line-ending
+      args: ['--fix=lf']
+    - id: check-yaml
+    - id: check-added-large-files
+
+- repo: https://github.com/kynan/nbstripout
+  rev: 0.7.1
+  hooks:
+    - id: nbstripout
+
+- repo: https://github.com/python-poetry/poetry
+  rev: 1.8.0
+  hooks:
+    - id: poetry-check
+    - id: poetry-lock
+      args: ["--no-update"]
+
+- repo: https://github.com/psf/black
+  rev: 24.4.2
+  hooks:
+    - id: black
+      args: ["-l", "100"]
+
+- repo: https://github.com/charliermarsh/ruff-pre-commit
+  rev: 'v0.4.8'
+  hooks:
+    - id: ruff
+      args: ["--fix", "--unsafe-fixes"]
+
+- repo: https://github.com/PyCQA/docformatter
+  rev: v1.7.5
+  hooks:
+    - id: docformatter
+      args: ["-r", "-i", "--wrap-summaries", "100", "--wrap-descriptions", "90"]
+
+- repo: local
+  hooks:
+    - id: tests
+      name: run tests
+      entry: make
+      args: [tests]
+      pass_filenames: false
+      language: system
+    - id: docs
+      name: create documentation
+      entry: make
+      args: [docs]
+      pass_filenames: false
+      language: system
